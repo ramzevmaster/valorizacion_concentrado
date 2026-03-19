@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valorización de Concentrado de Cobre: Mercuria vs Minex</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            background-color: #f0f2f5;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+        }
+        .header-title {
+            color: #1a3e6f;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+        .card {
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            border: none;
+            transition: transform 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .card-header {
+            border-radius: 20px 20px 0 0 !important;
+            font-weight: 600;
+            padding: 1rem 1.5rem;
+            border-bottom: none;
+        }
+        .bg-mercuria {
+            background: linear-gradient(135deg, #2c3e50, #1e2a36);
+            color: white;
+        }
+        .bg-minex {
+            background: linear-gradient(135deg, #0f4c5c, #0a3a47);
+            color: white;
+        }
+        .table-custom {
+            font-size: 0.9rem;
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        .table-custom td {
+            padding: 0.5rem;
+            vertical-align: middle;
+        }
+        .valor-final-box {
+            background: #e8f4f8;
+            border-radius: 15px;
+            padding: 15px;
+            text-align: center;
+            border-left: 5px solid #0d6efd;
+        }
+        .valor-final {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #0a3a47;
+            line-height: 1.2;
+        }
+        .btn-custom {
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            background: #1a3e6f;
+            border: none;
+            transition: all 0.3s;
+        }
+        .btn-custom:hover {
+            background: #0f2a4a;
+            transform: scale(1.02);
+        }
+        .video-banner {
+            background: linear-gradient(135deg, #4267B2, #898F9C);
+            color: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+        .video-banner a {
+            color: #FFD700;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        .video-banner a:hover {
+            text-decoration: underline;
+        }
+        .badge-cotizacion {
+            background-color: #e9ecef;
+            color: #1a3e6f;
+            font-size: 0.85rem;
+            padding: 5px 10px;
+            border-radius: 20px;
+        }
+        hr {
+            opacity: 0.2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container py-4">
+        <!-- Banner video Facebook -->
+        <div class="video-banner d-flex align-items-center">
+            <i class="fab fa-facebook-square fa-3x me-3"></i>
+            <div>
+                <h4 class="mb-1"><i class="fas fa-play-circle me-2"></i>Inspirado en: "Balances de dos productos con valorización"</h4>
+                <p class="mb-0">Video original de FIMM (grupo público) - 
+                    <a href="https://www.facebook.com/share/v/1Z7TiKBKWa/" target="_blank">
+                        Ver publicación en Facebook <i class="fas fa-external-link-alt ms-1"></i>
+                    </a>
+                </p>
+                <small>Transformamos los conceptos del video y tu Excel en esta calculadora interactiva.</small>
+            </div>
+        </div>
+
+        <!-- Título principal -->
+        <div class="text-center mb-4">
+            <h1 class="header-title">
+                <i class="fas fa-flask me-2"></i>VALORIZACIÓN DE CONCENTRADO DE COBRE
+            </h1>
+            <p class="text-muted">Comparación de términos: Mercuria vs. Minex · Actualización en tiempo real</p>
+        </div>
+
+        <!-- Fila de dos columnas: Mercuria y Minex -->
+        <div class="row g-4">
+            <!-- COLUMNA MERCURIA -->
+            <div class="col-lg-6">
+                <div class="card h-100">
+                    <div class="card-header bg-mercuria d-flex align-items-center">
+                        <i class="fas fa-industry fa-lg me-2"></i>
+                        <span style="font-size: 1.3rem;">MERCURIA · Términos y Valorización</span>
+                    </div>
+                    <div class="card-body">
+                        <!-- Leyes y cotizaciones -->
+                        <div class="row g-2 mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold"><i class="fas fa-percentage me-1"></i>Ley Cu %</label>
+                                <input type="number" class="form-control form-control-sm" id="leyCuM" value="0.2908" step="0.0001">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold"><i class="fas fa-dollar-sign me-1"></i>Cotización Cu ($/lb)</label>
+                                <input type="number" class="form-control form-control-sm" id="cotCuM" value="2.699" step="0.001">
+                                <div class="badge-cotizacion mt-1">= <span id="cotCuM_TM">5950.28</span> $/TM</div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold"><i class="fas fa-percentage me-1"></i>Ley Au (g/TM)</label>
+                                <input type="number" class="form-control form-control-sm" id="leyAuM" value="77.51053933" step="0.0001">
+                                <div class="badge-cotizacion mt-1"><span id="leyAuM_oz">2.491</span> oz/TM</div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold"><i class="fas fa-dollar-sign me-1"></i>Cotización Au ($/oz)</label>
+                                <input type="number" class="form-control form-control-sm" id="cotAuM" value="1420" step="1">
+                            </div>
+                        </div>
+
+                        <hr>
+
+                        <!-- Términos comerciales -->
+                        <div class="row g-2 mb-3">
+                            <div class="col-4">
+                                <label class="form-label small">% Pagable Cu</label>
+                                <input type="number" class="form-control form-control-sm" id="pagCuM" value="1" step="0.01">
+                            </div>
+                            <div class="col-4">
+                                <label class="form-label small">Deducción Cu %</label>
+                                <input type="number" class="form-control form-control-sm" id="dedCuM" value="0.013" step="0.001">
+                            </div>
+                            <div class="col-4">
+                                <label class="form-label small">Gastos Ref Cu ($/lb)</label>
+                                <input type="number" class="form-control form-control-sm" id="gastRefCuM" value="0.105" step="0.001">
+                            </div>
+                            <div class="col-4">
+                                <label class="form-label small">% Pagable Au</label>
+                                <input type="number" class="form-control form-control-sm" id="pagAuM" value="0.9" step="0.01">
+                            </div>
+                            <div class="col-4">
+                                <label class="form-label small">Deducción Au (g)</label>
+                                <input type="number" class="form-control form-control-sm" id="dedAuM" value="1.5" step="0.1">
+                            </div>
+                            <div class="col-4">
+                                <label class="form-label small">Gastos Ref Au ($/oz)</label>
+                                <input type="number" class="form-control form-control-sm" id="gastRefAuM" value="15" step="0.1">
+                            </div>
+                            <div class="col-6">
+                                <label class="form-label small">Maquila ($/TMS)</label>
+                                <input type="number" class="form-control form-control-sm" id="maquilaM" value="105" step="1">
+                            </div>
+                            <div class="col-6">
+                                <label class="form-label small">Análisis ($/TMS)</label>
+                                <input type="number" class="form-control form-control-sm" id="analisisM" value="3.16" step="0.01">
+                            </div>
+                        </div>
+
+                        <!-- Resultados intermedios y final Mercuria -->
+                        <div class="table-responsive mt-3">
+                            <table class="table table-sm table-custom">
+                                <tr class="table-primary"><th colspan="2">PAGOS (Cu + Au)</th><th class="text-end" id="pagosM">0.00</th></tr>
+                                <tr><td>Cu pagable (fracción)</td><td id="cuPagM_frac">0.0000</td><td class="text-end" id="pagoCuM">0.00</td></tr>
+                                <tr><td>Au pagable (oz)</td><td id="auPagM_oz">0.0000</td><td class="text-end" id="pagoAuM">0.00</td></tr>
+                                <tr class="table-warning"><th colspan="2">DEDUCCIONES</th><th class="text-end" id="deduccionesM">0.00</th></tr>
+                                <tr><td colspan="2">Maquila</td><td class="text-end" id="maquilaM_val">0.00</td></tr>
+                                <tr><td colspan="2">Gastos Ref Cu</td><td class="text-end" id="gastRefCuM_val">0.00</td></tr>
+                                <tr><td colspan="2">Gastos Ref Au</td><td class="text-end" id="gastRefAuM_val">0.00</td></tr>
+                                <tr><td colspan="2">Análisis</td><td class="text-end" id="analisisM_val">0.00</td></tr>
+                                <tr class="table-success"><th colspan="2">VALOR/TMS (sin IGV)</th><th class="text-end" id="valorTM_M">0.00</th></tr>
+                            </table>
+                        </div>
+
+                        <!-- Lote de 25 TMS con IGV -->
+                        <div class="valor-final-box mt-3">
+                            <div class="small text-muted">Valor por <strong>25 TMS</strong> (seco, sin humedad) + IGV 18%</div>
+                            <div class="valor-final" id="totalLoteM">$ 0.00</div>
+                            <div class="small text-muted mt-1">(Base imponible: <span id="baseLoteM">0</span> | IGV: <span id="igvLoteM">0</span>)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- COLUMNA MINEX -->
+            <div class="col-lg-6">
+                <div class="card h-100">
+                    <div class="card-header bg-minex d-flex align-items-center">
+                        <i class="fas fa-hard-hat fa-lg me-2"></i>
+                        <span style="font-size: 1.3rem;">MINEX · Términos y Valorización</span>
+                    </div>
+                    <div class="card-body">
+                        <!-- Leyes y cotizaciones (se toman igual que Mercuria, pero pueden editarse independientes) -->
+                        <div class="row g-2 mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold"><i class="fas fa-percentage me-1"></i>Ley Cu %</label>
+                                <input type="number" class="form-control form-control-sm" id="leyCuX" value="0.2908" step="0.0001">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold"><i class="fas fa-dollar-sign me-1"></i>Cotización Cu ($/lb)</label>
+                                <input type="number" class="form-control form-control-sm" id="cotCuX" value="2.699" step="0.001">
+                                <div class="badge-cotizacion mt-1">= <span id="cotCuX_TM">5950.28</span> $/TM</div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold"><i class="fas fa-percentage me-1"></i>Ley Au (g/TM)</label>
+                                <input type="number" class="form-control form-control-sm" id="leyAuX" value="77.51053933" step="0.0001">
+                                <div class="badge-cotizacion mt-1"><span id="leyAuX_oz">2.491</span> oz/TM</div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold"><i class="fas fa-dollar-sign me-1"></i>Cotización Au ($/oz)</label>
+                                <input type="number" class="form-control form-control-sm" id="cotAuX" value="1420" step="1">
+                            </div>
+                        </div>
+
+                        <hr>
+
+                        <!-- Términos comerciales Minex -->
+                        <div class="row g-2 mb-3">
+                            <div class="col-4">
+                                <label class="form-label small">% Pagable Cu</label>
+                                <input type="number" class="form-control form-control-sm" id="pagCuX" value="0.96" step="0.01">
+                            </div>
+                            <div class="col-4">
+                                <label class="form-label small">Deducción Cu %</label>
+                                <input type="number" class="form-control form-control-sm" id="dedCuX" value="0.0125" step="0.001">
+                            </div>
+                            <div class="col-4">
+                                <label class="form-label small">Gastos Ref Cu ($/lb)</label>
+                                <input type="number" class="form-control form-control-sm" id="gastRefCuX" value="0.12" step="0.001">
+                            </div>
+                            <div class="col-4">
+                                <label class="form-label small">% Pagable Au</label>
+                                <input type="number" class="form-control form-control-sm" id="pagAuX" value="0.9" step="0.01">
+                            </div>
+                            <div class="col-4">
+                                <label class="form-label small">Deducción Au (g)</label>
+                                <input type="number" class="form-control form-control-sm" id="dedAuX" value="1.5" step="0.1">
+                            </div>
+                            <div class="col-4">
+                                <label class="form-label small">Gastos Ref Au ($/oz)</label>
+                                <input type="number" class="form-control form-control-sm" id="gastRefAuX" value="12" step="0.1">
+                            </div>
+                            <div class="col-6">
+                                <label class="form-label small">Maquila ($/TMS)</label>
+                                <input type="number" class="form-control form-control-sm" id="maquilaX" value="120" step="1">
+                            </div>
+                            <div class="col-6">
+                                <label class="form-label small">Análisis ($/TMS)</label>
+                                <input type="number" class="form-control form-control-sm" id="analisisX" value="3.16" step="0.01">
+                            </div>
+                        </div>
+
+                        <!-- Resultados Minex -->
+                        <div class="table-responsive mt-3">
+                            <table class="table table-sm table-custom">
+                                <tr class="table-primary"><th colspan="2">PAGOS (Cu + Au)</th><th class="text-end" id="pagosX">0.00</th></tr>
+                                <tr><td>Cu pagable (fracción)</td><td id="cuPagX_frac">0.0000</td><td class="text-end" id="pagoCuX">0.00</td></tr>
+                                <tr><td>Au pagable (oz)</td><td id="auPagX_oz">0.0000</td><td class="text-end" id="pagoAuX">0.00</td></tr>
+                                <tr class="table-warning"><th colspan="2">DEDUCCIONES</th><th class="text-end" id="deduccionesX">0.00</th></tr>
+                                <tr><td colspan="2">Maquila</td><td class="text-end" id="maquilaX_val">0.00</td></tr>
+                                <tr><td colspan="2">Gastos Ref Cu</td><td class="text-end" id="gastRefCuX_val">0.00</td></tr>
+                                <tr><td colspan="2">Gastos Ref Au</td><td class="text-end" id="gastRefAuX_val">0.00</td></tr>
+                                <tr><td colspan="2">Análisis</td><td class="text-end" id="analisisX_val">0.00</td></tr>
+                                <tr class="table-success"><th colspan="2">VALOR/TMS (sin IGV)</th><th class="text-end" id="valorTM_X">0.00</th></tr>
+                            </table>
+                        </div>
+
+                        <!-- Lote de 25 TMS con IGV -->
+                        <div class="valor-final-box mt-3">
+                            <div class="small text-muted">Valor por <strong>25 TMS</strong> (seco, sin humedad) + IGV 18%</div>
+                            <div class="valor-final" id="totalLoteX">$ 0.00</div>
+                            <div class="small text-muted mt-1">(Base imponible: <span id="baseLoteX">0</span> | IGV: <span id="igvLoteX">0</span>)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Botón de recalcular (aunque todo es en vivo, dejamos uno por si acaso) -->
+        <div class="text-center mt-4">
+            <button class="btn btn-custom btn-primary" id="calcBtn">
+                <i class="fas fa-sync-alt me-2"></i>Actualizar Cálculos
+            </button>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        (function() {
+            // Conversión lb a TM
+            const LB_TO_TM = 0.000453592;
+            const TM_TO_LB = 2204.62;
+            const OZ_TO_G = 31.1035;
+
+            // Elementos del DOM
+            // Mercuria inputs
+            const leyCuM = document.getElementById('leyCuM');
+            const cotCuM = document.getElementById('cotCuM');
+            const leyAuM = document.getElementById('leyAuM');
+            const cotAuM = document.getElementById('cotAuM');
+            const pagCuM = document.getElementById('pagCuM');
+            const dedCuM = document.getElementById('dedCuM');
+            const gastRefCuM = document.getElementById('gastRefCuM');
+            const pagAuM = document.getElementById('pagAuM');
+            const dedAuM = document.getElementById('dedAuM');
+            const gastRefAuM = document.getElementById('gastRefAuM');
+            const maquilaM = document.getElementById('maquilaM');
+            const analisisM = document.getElementById('analisisM');
+
+            // Mercuria outputs
+            const cotCuM_TM = document.getElementById('cotCuM_TM');
+            const leyAuM_oz = document.getElementById('leyAuM_oz');
+            const pagosM = document.getElementById('pagosM');
+            const cuPagM_frac = document.getElementById('cuPagM_frac');
+            const pagoCuM = document.getElementById('pagoCuM');
+            const auPagM_oz = document.getElementById('auPagM_oz');
+            const pagoAuM = document.getElementById('pagoAuM');
+            const deduccionesM = document.getElementById('deduccionesM');
+            const maquilaM_val = document.getElementById('maquilaM_val');
+            const gastRefCuM_val = document.getElementById('gastRefCuM_val');
+            const gastRefAuM_val = document.getElementById('gastRefAuM_val');
+            const analisisM_val = document.getElementById('analisisM_val');
+            const valorTM_M = document.getElementById('valorTM_M');
+            const totalLoteM = document.getElementById('totalLoteM');
+            const baseLoteM = document.getElementById('baseLoteM');
+            const igvLoteM = document.getElementById('igvLoteM');
+
+            // Minex inputs
+            const leyCuX = document.getElementById('leyCuX');
+            const cotCuX = document.getElementById('cotCuX');
+            const leyAuX = document.getElementById('leyAuX');
+            const cotAuX = document.getElementById('cotAuX');
+            const pagCuX = document.getElementById('pagCuX');
+            const dedCuX = document.getElementById('dedCuX');
+            const gastRefCuX = document.getElementById('gastRefCuX');
+            const pagAuX = document.getElementById('pagAuX');
+            const dedAuX = document.getElementById('dedAuX');
+            const gastRefAuX = document.getElementById('gastRefAuX');
+            const maquilaX = document.getElementById('maquilaX');
+            const analisisX = document.getElementById('analisisX');
+
+            // Minex outputs
+            const cotCuX_TM = document.getElementById('cotCuX_TM');
+            const leyAuX_oz = document.getElementById('leyAuX_oz');
+            const pagosX = document.getElementById('pagosX');
+            const cuPagX_frac = document.getElementById('cuPagX_frac');
+            const pagoCuX = document.getElementById('pagoCuX');
+            const auPagX_oz = document.getElementById('auPagX_oz');
+            const pagoAuX = document.getElementById('pagoAuX');
+            const deduccionesX = document.getElementById('deduccionesX');
+            const maquilaX_val = document.getElementById('maquilaX_val');
+            const gastRefCuX_val = document.getElementById('gastRefCuX_val');
+            const gastRefAuX_val = document.getElementById('gastRefAuX_val');
+            const analisisX_val = document.getElementById('analisisX_val');
+            const valorTM_X = document.getElementById('valorTM_X');
+            const totalLoteX = document.getElementById('totalLoteX');
+            const baseLoteX = document.getElementById('baseLoteX');
+            const igvLoteX = document.getElementById('igvLoteX');
+
+            function formatMoney(value) {
+                return '$ ' + value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+            }
+
+            function calcularTodo() {
+                // --- MERCURIA ---
+                const lCuM = parseFloat(leyCuM.value) || 0;
+                const cCuM = parseFloat(cotCuM.value) || 0;
+                const lAuM = parseFloat(leyAuM.value) || 0;
+                const cAuM = parseFloat(cotAuM.value) || 0;
+                const pCuM = parseFloat(pagCuM.value) || 0;
+                const dCuM = parseFloat(dedCuM.value) || 0;
+                const gCuM = parseFloat(gastRefCuM.value) || 0;
+                const pAuM = parseFloat(pagAuM.value) || 0;
+                const dAuM = parseFloat(dedAuM.value) || 0;
+                const gAuM = parseFloat(gastRefAuM.value) || 0;
+                const maqM = parseFloat(maquilaM.value) || 0;
+                const anM = parseFloat(analisisM.value) || 0;
+
+                // Cotización Cu en $/TM
+                const cotCuM_TM_val = cCuM / LB_TO_TM;
+                cotCuM_TM.textContent = cotCuM_TM_val.toFixed(2);
+
+                // Conversión Au g/TM a oz/TM
+                const auOzTM = lAuM / OZ_TO_G;
+                leyAuM_oz.textContent = auOzTM.toFixed(3);
+
+                // Cálculo pago Cu
+                const cuPagableFrac = (lCuM / 100 - dCuM) * pCuM; // fracción de 1
+                cuPagM_frac.textContent = cuPagableFrac.toFixed(6);
+                const pagoCuVal = cuPagableFrac * cotCuM_TM_val;
+                pagoCuM.textContent = formatMoney(pagoCuVal);
+
+                // Cálculo pago Au
+                const auPagableOz = Math.max(0, (auOzTM - (dAuM / OZ_TO_G))) * pAuM;
+                auPagM_oz.textContent = auPagableOz.toFixed(4);
+                const pagoAuVal = auPagableOz * cAuM;
+                pagoAuM.textContent = formatMoney(pagoAuVal);
+
+                const totalPagosM = pagoCuVal + pagoAuVal;
+                pagosM.textContent = formatMoney(totalPagosM);
+
+                // Deducciones
+                const maqM_val = maqM;
+                maquilaM_val.textContent = formatMoney(maqM_val);
+                
+                // Gasto ref Cu: contenido pagable Cu (fracción) * cotización $/lb * TM a lb? OJO: En Excel: contenido pagable (fracción) * (gastoref $/lb * 2204.62) ? 
+                // Según tu hoja: Gastos x refCu = contenido pagable * (gastos $/lb) * 2204.62 (para pasar a $/TM) -> en la tabla aparece 231.48 = 0.105*2204.62
+                const gastRefCuVal = cuPagableFrac * gCuM * TM_TO_LB; 
+                gastRefCuM_val.textContent = formatMoney(gastRefCuVal);
+
+                const gastRefAuVal = auPagableOz * gAuM;
+                gastRefAuM_val.textContent = formatMoney(gastRefAuVal);
+
+                const analisisM_valNum = anM;
+                analisisM_val.textContent = formatMoney(analisisM_valNum);
+
+                const totalDedM = maqM_val + gastRefCuVal + gastRefAuVal + analisisM_valNum;
+                deduccionesM.textContent = formatMoney(totalDedM);
+
+                const valorTM_M_val = totalPagosM - totalDedM;
+                valorTM_M.textContent = formatMoney(valorTM_M_val);
+
+                // Lote de 25 TMS (seco)
+                const tms = 25;
+                const base = valorTM_M_val * tms;
+                const igv = base * 0.18;
+                const total = base + igv;
+                baseLoteM.textContent = formatMoney(base);
+                igvLoteM.textContent = formatMoney(igv);
+                totalLoteM.textContent = formatMoney(total);
+
+                // --- MINEX ---
+                const lCuX = parseFloat(leyCuX.value) || 0;
+                const cCuX = parseFloat(cotCuX.value) || 0;
+                const lAuX = parseFloat(leyAuX.value) || 0;
+                const cAuX = parseFloat(cotAuX.value) || 0;
+                const pCuX = parseFloat(pagCuX.value) || 0;
+                const dCuX = parseFloat(dedCuX.value) || 0;
+                const gCuX = parseFloat(gastRefCuX.value) || 0;
+                const pAuX = parseFloat(pagAuX.value) || 0;
+                const dAuX = parseFloat(dedAuX.value) || 0;
+                const gAuX = parseFloat(gastRefAuX.value) || 0;
+                const maqX = parseFloat(maquilaX.value) || 0;
+                const anX = parseFloat(analisisX.value) || 0;
+
+                const cotCuX_TM_val = cCuX / LB_TO_TM;
+                cotCuX_TM.textContent = cotCuX_TM_val.toFixed(2);
+
+                const auOzTMX = lAuX / OZ_TO_G;
+                leyAuX_oz.textContent = auOzTMX.toFixed(3);
+
+                const cuPagableFracX = (lCuX / 100 - dCuX) * pCuX;
+                cuPagX_frac.textContent = cuPagableFracX.toFixed(6);
+                const pagoCuValX = cuPagableFracX * cotCuX_TM_val;
+                pagoCuX.textContent = formatMoney(pagoCuValX);
+
+                const auPagableOzX = Math.max(0, (auOzTMX - (dAuX / OZ_TO_G))) * pAuX;
+                auPagX_oz.textContent = auPagableOzX.toFixed(4);
+                const pagoAuValX = auPagableOzX * cAuX;
+                pagoAuX.textContent = formatMoney(pagoAuValX);
+
+                const totalPagosX = pagoCuValX + pagoAuValX;
+                pagosX.textContent = formatMoney(totalPagosX);
+
+                const maqX_val = maqX;
+                maquilaX_val.textContent = formatMoney(maqX_val);
+                
+                const gastRefCuValX = cuPagableFracX * gCuX * TM_TO_LB;
+                gastRefCuX_val.textContent = formatMoney(gastRefCuValX);
+
+                const gastRefAuValX = auPagableOzX * gAuX;
+                gastRefAuX_val.textContent = formatMoney(gastRefAuValX);
+
+                const analisisX_valNum = anX;
+                analisisX_val.textContent = formatMoney(analisisX_valNum);
+
+                const totalDedX = maqX_val + gastRefCuValX + gastRefAuValX + analisisX_valNum;
+                deduccionesX.textContent = formatMoney(totalDedX);
+
+                const valorTM_X_val = totalPagosX - totalDedX;
+                valorTM_X.textContent = formatMoney(valorTM_X_val);
+
+                const baseX = valorTM_X_val * tms;
+                const igvX = baseX * 0.18;
+                const totalX = baseX + igvX;
+                baseLoteX.textContent = formatMoney(baseX);
+                igvLoteX.textContent = formatMoney(igvX);
+                totalLoteX.textContent = formatMoney(totalX);
+            }
+
+            // Asignar eventos a todos los inputs para recalcular al instante
+            const inputs = [
+                leyCuM, cotCuM, leyAuM, cotAuM, pagCuM, dedCuM, gastRefCuM, pagAuM, dedAuM, gastRefAuM, maquilaM, analisisM,
+                leyCuX, cotCuX, leyAuX, cotAuX, pagCuX, dedCuX, gastRefCuX, pagAuX, dedAuX, gastRefAuX, maquilaX, analisisX
+            ];
+            inputs.forEach(inp => inp.addEventListener('input', calcularTodo));
+
+            // Botón recalcular
+            document.getElementById('calcBtn').addEventListener('click', calcularTodo);
+
+            // Inicializar
+            calcularTodo();
+        })();
+    </script>
+    <!-- Bootstrap JS (opcional para algunos componentes) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
